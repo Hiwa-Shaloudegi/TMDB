@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/no_result_widget.dart';
 import 'package:tmdb/common/widgets/sliver_main_app_bar.dart';
 import 'package:tmdb/common/widgets/sliver_movie_info_item_list.dart';
 
-class FavoritesPage extends ConsumerStatefulWidget {
+class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _FavoritesPageState();
+  State<StatefulWidget> createState() => _FavoritesPageState();
 }
 
-class _FavoritesPageState extends ConsumerState<FavoritesPage> {
+class _FavoritesPageState extends State<FavoritesPage> {
   List favMovieList = [0];
 
   @override

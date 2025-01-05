@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tmdb/app.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
+import 'package:tmdb/config/theme/cubit/theme_cubit.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,8 +13,13 @@ void main() {
     ),
   );
   runApp(
-    const ProviderScope(
-      child: App(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        ),
+      ],
+      child: const App(),
     ),
   );
 }

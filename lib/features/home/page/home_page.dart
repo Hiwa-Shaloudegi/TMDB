@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
-import 'package:tmdb/features/home/pages/widgets/banner_list.dart';
-import 'package:tmdb/features/home/pages/widgets/header_text.dart';
+import 'package:tmdb/features/home/page/widgets/banner_list.dart';
+import 'package:tmdb/features/home/page/widgets/header_text.dart';
 import 'package:tmdb/common/widgets/app_filter_tabbar.dart';
-import 'package:tmdb/features/home/pages/widgets/movie_tab_view.dart';
+import 'package:tmdb/features/home/page/widgets/movie_tab_view.dart';
 import 'package:tmdb/common/widgets/search_field.dart';
 
-class HomePage extends ConsumerStatefulWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _HomePageState();
+  State<StatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

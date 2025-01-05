@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/no_result_widget.dart';
@@ -8,14 +7,14 @@ import 'package:tmdb/common/widgets/sliver_movie_info_item_list.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/common/widgets/search_field.dart';
 
-class SearchPage extends ConsumerStatefulWidget {
+class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SearchPageState();
+  State<StatefulWidget> createState() => _SearchPageState();
 }
 
-class _SearchPageState extends ConsumerState<SearchPage> {
+class _SearchPageState extends State<SearchPage> {
   late TextEditingController searchTextController;
   List searchedMovieList = [];
 

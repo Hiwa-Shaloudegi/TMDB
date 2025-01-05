@@ -1,36 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb/core/router/app_routes.dart';
-import 'package:tmdb/features/splash/notifier/splash_controller.dart';
-import 'package:tmdb/features/splash/notifier/splash_state.dart';
+import 'package:tmdb/features/splash/bloc/splash_cubit.dart';
+import 'package:tmdb/features/splash/bloc/splash_state.dart';
+import 'package:tmdb/features/splash/bloc/splash_status.dart';
 
-class SplashPage extends ConsumerStatefulWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SplashPageState();
+  State<StatefulWidget> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends ConsumerState<SplashPage> {
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(splashControllerProvider.notifier).init();
-    });
-    super.initState();
-  }
-
+class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
-    // ref.listen
-    setRefListener();
-
-    // ref.watch
-    final splashState = ref.watch(splashControllerProvider);
-
     return Scaffold(
       body: Stack(
         children: [
@@ -41,28 +28,27 @@ class _SplashPageState extends ConsumerState<SplashPage> {
             bottom: 32,
             right: 0,
             left: 0,
-            child: splashState.splashStatus == AsyncStatus.loading
-                ? const Center(
+            child: BlocConsumer<SplashCubit, SplashState>(
+              listener: (context, state) {
+                if (state.initStatus is InitSuccess) {
+                  context.go(AppRoutes.main);
+                }
+              },
+              builder: (context, state) {
+                if (state.initStatus is InitLoading) {
+                  return const Center(
                     child: SpinKitThreeBounce(
                       color: Colors.white,
                       size: 30,
                     ),
-                  )
-                : const SizedBox.shrink(),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  setRefListener() {
-    ref.listen(
-      splashControllerProvider,
-      (previous, next) {
-        if (next.splashStatus == AsyncStatus.success) {
-          context.go(AppRoutes.main);
-        }
-      },
     );
   }
 }

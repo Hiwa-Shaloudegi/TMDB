@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
-import 'package:tmdb/features/main/notifier/navbar_notifier.dart';
+import 'package:tmdb/features/main/cubit/main_cubit.dart';
 
-class SearchField extends ConsumerStatefulWidget {
+class SearchField extends StatefulWidget {
   const SearchField({
     super.key,
     this.isEnabled = true,
@@ -16,10 +16,10 @@ class SearchField extends ConsumerStatefulWidget {
   final TextEditingController? controller;
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _SearchFieldState();
+  State<SearchField> createState() => _SearchFieldState();
 }
 
-class _SearchFieldState extends ConsumerState<SearchField> {
+class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -30,7 +30,7 @@ class _SearchFieldState extends ConsumerState<SearchField> {
         height: 45,
         child: Center(
           child: GestureDetector(
-            onTap: () => ref.read(navIndexValueProvider.notifier).state = 1,
+            onTap: () => context.read<MainCubit>().changeNavIndex(1),
             child: TextField(
               controller: widget.controller,
               // onTap: () {

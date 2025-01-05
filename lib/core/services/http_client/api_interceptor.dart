@@ -1,14 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:tmdb/config/consts/secure_storage_keys.dart';
-import 'package:tmdb/core/services/secure_storage/secure_storage_service.dart';
+// import 'package:tmdb/core/services/secure_storage/secure_storage_service.dart';
 
-final apiInterceptorProvider = Provider<ApiInterceptor>((ref) {
-  final secureStorage = ref.watch(secureStorageServiceProvider);
+// final apiInterceptorProvider = Provider<ApiInterceptor>((ref) {
+//   final secureStorage = ref.watch(secureStorageServiceProvider);
 
-  return ApiInterceptor(secureStorage);
-});
+//   return ApiInterceptor(secureStorage);
+// });
 
 class ApiInterceptor extends Interceptor {
   final FlutterSecureStorage _secureStorage;

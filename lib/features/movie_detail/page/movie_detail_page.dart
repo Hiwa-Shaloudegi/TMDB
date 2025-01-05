@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/sliver_main_app_bar.dart';
@@ -9,14 +8,14 @@ import 'package:tmdb/features/movie_detail/page/widgets/movie_cast_grid_view.dar
 import 'package:tmdb/features/movie_detail/page/widgets/movie_desc_view.dart';
 import 'package:tmdb/features/movie_detail/page/widgets/movie_reviews.dart';
 
-class MovieDetailPage extends ConsumerStatefulWidget {
+class MovieDetailPage extends StatefulWidget {
   const MovieDetailPage({super.key});
 
   @override
-  ConsumerState createState() => _MovieDaState();
+  State createState() => _MovieDaState();
 }
 
-class _MovieDaState extends ConsumerState<MovieDetailPage> {
+class _MovieDaState extends State<MovieDetailPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
