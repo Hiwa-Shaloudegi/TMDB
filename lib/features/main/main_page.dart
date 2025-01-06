@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
+import 'package:tmdb/core/di/di.dart';
 import 'package:tmdb/features/favorites/page/favorites_page.dart';
+import 'package:tmdb/features/home/cubit/home_cubit.dart';
 import 'package:tmdb/features/home/page/home_page.dart';
 import 'package:tmdb/features/main/cubit/main_cubit.dart';
 import 'package:tmdb/features/main/widgets/svg_nav_icon.dart';
@@ -15,8 +17,14 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainSkeletonState extends State<MainPage> {
-  final screens = const [
-    HomePage(),
+  final screens = [
+    BlocProvider(
+      create: (context) => HomeCubit(
+        moviesListRepo: getIt(),
+        trendingRepo: getIt(),
+      ),
+      child: HomePage(),
+    ),
     SearchPage(),
     FavoritesPage(),
   ];

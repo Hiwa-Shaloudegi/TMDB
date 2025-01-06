@@ -37,7 +37,7 @@ class _MovieDaState extends State<MovieDetailPage> {
                   width: double.infinity,
                   height: size.height * 0.3,
                   decoration: BoxDecoration(
-                    color: AppColors.shimmerLoadingDark,
+                    color: AppColors.shimmerBaseDark,
                     borderRadius: const BorderRadius.vertical(
                       bottom: Radius.circular(16),
                     ),

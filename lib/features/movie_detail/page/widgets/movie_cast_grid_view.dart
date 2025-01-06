@@ -25,7 +25,7 @@ class MovieCastGridView extends StatelessWidget {
               width: size.width * 0.25,
               height: size.width * 0.25,
               decoration: BoxDecoration(
-                color: AppColors.shimmerLoadingDark,
+                color: AppColors.shimmerBaseDark,
                 shape: BoxShape.circle,
               ),
             ),

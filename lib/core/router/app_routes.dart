@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tmdb/core/di/di.dart';
 import 'package:tmdb/features/favorites/page/favorites_page.dart';
+import 'package:tmdb/features/home/cubit/home_cubit.dart';
 import 'package:tmdb/features/home/page/home_page.dart';
 import 'package:tmdb/features/main/cubit/main_cubit.dart';
 import 'package:tmdb/features/main/main_page.dart';
@@ -22,7 +24,6 @@ abstract class AppRoutes {
     routes: [
       GoRoute(
         path: AppRoutes.splash,
-        // name: ,
         builder: (context, state) => BlocProvider(
           create: (context) => SplashCubit()..init(),
           child: const SplashPage(),
@@ -32,12 +33,18 @@ abstract class AppRoutes {
         path: AppRoutes.main,
         builder: (context, state) => BlocProvider(
           create: (context) => MainCubit(),
-          child: MainPage(),
+          child: const MainPage(),
         ),
       ),
       GoRoute(
         path: AppRoutes.home,
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => HomeCubit(
+            moviesListRepo: getIt(),
+            trendingRepo: getIt(),
+          ), //..getHomeData(),
+          child: const HomePage(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.search,

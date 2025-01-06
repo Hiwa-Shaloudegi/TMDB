@@ -19,8 +19,9 @@ abstract class AppColors {
   static const textFieldBgDark = Color(0xFF3A3F47);
 
   /// Shimmer Loading Colors
-  static final shimmerLoadingLight = Colors.grey.shade300;
-  static final shimmerLoadingDark = Colors.grey.shade700; // Color(0xFF92929D);
+  static final shimmerBaseLight = Colors.grey.shade300;
+  static final shimmerBaseDark = Colors.grey.shade700;
+  static final shimmerHighlightDark = Colors.grey.shade500;
 
   /// Unselected Label
   static const unselectedLabelLight = Color(0xFF67686D);

@@ -21,7 +21,7 @@ class MovieTabView extends StatelessWidget {
           onTap: () => context.push(AppRoutes.movieDetail),
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.shimmerLoadingDark,
+              color: AppColors.shimmerBaseDark,
               borderRadius: BorderRadius.circular(16),
             ),
           ),

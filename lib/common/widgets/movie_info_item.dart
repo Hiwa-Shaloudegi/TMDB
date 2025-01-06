@@ -22,7 +22,7 @@ class MovieInfoItem extends StatelessWidget {
           Container(
             width: size.width * 0.3,
             decoration: BoxDecoration(
-              color: AppColors.shimmerLoadingDark,
+              color: AppColors.shimmerBaseDark,
               borderRadius: BorderRadius.circular(16),
             ),
           ),
