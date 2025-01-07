@@ -1,5 +1,5 @@
-import 'package:tmdb/data/dtos/response/now_playing_response_dto.dart';
 import 'package:tmdb/data/dtos/response/trending_movie_response_dto.dart';
+import 'package:tmdb/features/home/models/movie_poster.dart';
 
 // GetHomeData
 abstract class GetHomeDataStatus {}
@@ -9,11 +9,9 @@ final class GetHomeDataInitial extends GetHomeDataStatus {}
 final class GetHomeDataLoading extends GetHomeDataStatus {}
 
 final class GetHomeDataSuccess extends GetHomeDataStatus {
-  final NowPlayingResponseDto nowPlaying;
   final TrendingMoviesResponseDto trendingMovies;
 
   GetHomeDataSuccess({
-    required this.nowPlaying,
     required this.trendingMovies,
   });
 }
@@ -31,7 +29,9 @@ final class GetTabMoviesInitial extends GetTabMoviesStatus {}
 final class GetTabMoviesLoading extends GetTabMoviesStatus {}
 
 final class GetTabMoviesSuccess extends GetTabMoviesStatus {
-  final tabMovies = [];
+  final List<MoviePoster> moviePosters;
+
+  GetTabMoviesSuccess({required this.moviePosters});
 }
 
 final class GetTabMoviesError extends GetTabMoviesStatus {

@@ -4,6 +4,7 @@ import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/custom_refresh_indicator.dart';
 import 'package:tmdb/common/widgets/retry_error_widget.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
+import 'package:tmdb/config/theme/colors/app_colors.dart';
 import 'package:tmdb/features/home/cubit/home_cubit.dart';
 import 'package:tmdb/features/home/cubit/home_status.dart';
 import 'package:tmdb/features/home/page/widgets/banner_list.dart';
@@ -68,14 +69,17 @@ class _HomePageState extends State<HomePage> {
                         child: BannerList(),
                       ),
                       48.sh,
-                      const SliverToBoxAdapter(
-                        child: AppFilterTabBar(
-                          tabs: [
-                            Tab(text: 'Now playing'),
-                            Tab(text: 'Upcoming'),
-                            Tab(text: 'Top rated'),
-                            Tab(text: 'Popular'),
-                          ],
+                      PinnedHeaderSliver(
+                        child: Container(
+                          color: AppColors.backgroundDark,
+                          child: const AppFilterTabBar(
+                            tabs: [
+                              Tab(text: 'Now playing'),
+                              Tab(text: 'Upcoming'),
+                              Tab(text: 'Top rated'),
+                              Tab(text: 'Popular'),
+                            ],
+                          ),
                         ),
                       ),
                       16.sh,
