@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
+import 'package:tmdb/common/widgets/custom_refresh_indicator.dart';
+import 'package:tmdb/common/widgets/retry_error_widget.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/features/home/cubit/home_cubit.dart';
 import 'package:tmdb/features/home/cubit/home_status.dart';
@@ -28,7 +30,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
-        return RefreshIndicator(
+        return CustomRefreshIndicator(
           onRefresh: () => context.read<HomeCubit>().getHomeData(),
           child: Scaffold(
             body: SafeArea(
@@ -49,15 +51,17 @@ class _HomePageState extends State<HomePage> {
 
                     //* GetHomeDataError
                     if (state.getHomeDataStatus is GetHomeDataError) ...[
-                      const SliverFillRemaining(
+                      SliverFillRemaining(
                         hasScrollBody: false,
-                        child: Center(
-                          child: Text("EROOORRRR"),
+                        child: RetryErrorWidget(
+                          onRetry: () {
+                            context.read<HomeCubit>().getHomeData();
+                          },
                         ),
                       ),
                     ]
 
-                    //* GetHomeDataSuccess
+                    //* GetHomeDataSuccess OR GetHomeDataLoading
                     else if (state.getHomeDataStatus is GetHomeDataLoading ||
                         state.getHomeDataStatus is GetHomeDataSuccess) ...[
                       const SliverToBoxAdapter(

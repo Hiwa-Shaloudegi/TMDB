@@ -65,6 +65,7 @@ void initDataSources() {
   getIt.registerSingleton<TrendingDataSrc>(
     TrendingDataSrc(
       getIt(),
+      getIt(),
     ),
   );
 }
