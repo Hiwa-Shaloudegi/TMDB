@@ -63,7 +63,10 @@ class HomeCubit extends Cubit<HomeState> {
 
         for (var dto in nowPlaying.results!) {
           movies.add(
-            MoviePoster(poster: dto.posterPath ?? ''),
+            MoviePoster(
+              id: dto.id!,
+              poster: dto.posterPath ?? '',
+            ),
           );
         }
       } else if (state.currentTabIndex == 1) {
@@ -72,7 +75,10 @@ class HomeCubit extends Cubit<HomeState> {
 
         for (var dto in upcoming.results!) {
           movies.add(
-            MoviePoster(poster: dto.posterPath ?? ''),
+            MoviePoster(
+              id: dto.id!,
+              poster: dto.posterPath ?? '',
+            ),
           );
         }
       } else if (state.currentTabIndex == 2) {
@@ -81,7 +87,10 @@ class HomeCubit extends Cubit<HomeState> {
 
         for (var dto in topRated.results!) {
           movies.add(
-            MoviePoster(poster: dto.posterPath ?? ''),
+            MoviePoster(
+              id: dto.id!,
+              poster: dto.posterPath ?? '',
+            ),
           );
         }
       } else if (state.currentTabIndex == 3) {
@@ -89,7 +98,10 @@ class HomeCubit extends Cubit<HomeState> {
 
         for (var dto in popular.results!) {
           movies.add(
-            MoviePoster(poster: dto.posterPath ?? ''),
+            MoviePoster(
+              id: dto.id!,
+              poster: dto.posterPath ?? '',
+            ),
           );
         }
       }

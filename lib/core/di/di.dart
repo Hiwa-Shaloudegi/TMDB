@@ -3,9 +3,13 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:tmdb/config/consts/endpoints.dart';
 import 'package:tmdb/core/services/http_client/api_interceptor.dart';
+import 'package:tmdb/data/data_src/remote/movies/movies_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/movies_list/movies_list_data_src_remote.dart';
+import 'package:tmdb/data/data_src/remote/search/search_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/trending/trending_data_src.dart';
+import 'package:tmdb/data/repos/movies/movies_repo.dart';
 import 'package:tmdb/data/repos/movies_list/movies_list_repo.dart';
+import 'package:tmdb/data/repos/search/search_repo.dart';
 import 'package:tmdb/data/repos/trending/trending_repo.dart';
 
 final getIt = GetIt.instance;
@@ -38,9 +42,9 @@ void initServices() {
     () {
       final baseOptions = BaseOptions(
         baseUrl: Endpoints.tmdbBaseUrl,
-        connectTimeout: const Duration(seconds: 5),
-        receiveTimeout: const Duration(seconds: 5),
-        sendTimeout: const Duration(seconds: 5),
+        connectTimeout: const Duration(seconds: 10),
+        receiveTimeout: const Duration(seconds: 10),
+        sendTimeout: const Duration(seconds: 10),
       );
 
       final dio = Dio(baseOptions);
@@ -68,6 +72,20 @@ void initDataSources() {
       getIt(),
     ),
   );
+
+  getIt.registerSingleton<MoviesDataSrcRemote>(
+    MoviesDataSrcRemote(
+      getIt(),
+      getIt(),
+    ),
+  );
+
+  getIt.registerSingleton<SearchDataSrcRemote>(
+    SearchDataSrcRemote(
+      getIt(),
+      getIt(),
+    ),
+  );
 }
 
 void initRepos() {
@@ -76,8 +94,21 @@ void initRepos() {
       getIt(),
     ),
   );
+
   getIt.registerSingleton<TrendingRepo>(
     TrendingRepo(
+      getIt(),
+    ),
+  );
+
+  getIt.registerSingleton<MoviesRepo>(
+    MoviesRepo(
+      getIt(),
+    ),
+  );
+
+  getIt.registerSingleton<SearchRepo>(
+    SearchRepo(
       getIt(),
     ),
   );

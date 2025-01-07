@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb/config/consts/app_sizes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tmdb/features/movie_detail/cubit/movie_detail_cubit.dart';
 
 class MovieDescView extends StatelessWidget {
   const MovieDescView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var status = context.watch<MovieDetailCubit>().state.getMovieDetailsStatus
+        as GetMovieDetailsSuccess;
+
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSizes.pagePadding),
-      child: const Text(
-        'From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.',
+      margin: const EdgeInsets.symmetric(horizontal: 22),
+      child: Text(
+        status.movieDetail.overview!,
+        textAlign: TextAlign.justify,
       ),
     );
   }

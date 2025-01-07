@@ -4,9 +4,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb/core/router/app_routes.dart';
-import 'package:tmdb/features/splash/bloc/splash_cubit.dart';
-import 'package:tmdb/features/splash/bloc/splash_state.dart';
-import 'package:tmdb/features/splash/bloc/splash_status.dart';
+import 'package:tmdb/features/splash/cubit/splash_cubit.dart';
+import 'package:tmdb/features/splash/cubit/splash_state.dart';
+import 'package:tmdb/features/splash/cubit/splash_status.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});

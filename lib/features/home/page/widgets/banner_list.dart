@@ -33,18 +33,24 @@ class BannerList extends StatelessWidget {
               separatorBuilder: (context, index) => 16.w,
               itemBuilder: (context, index) {
                 final String? imageUrl;
+                final int id;
                 if (state.getHomeDataStatus is GetHomeDataSuccess) {
                   final bannerModel =
                       (state.getHomeDataStatus as GetHomeDataSuccess)
                           .trendingMovies
                           .results![index];
                   imageUrl = bannerModel.posterPath;
+                  id = bannerModel.id!;
                 } else {
                   imageUrl = '';
+                  id = 0;
                 }
                 return Skeleton.leaf(
                   enabled: state.getHomeDataStatus is GetHomeDataLoading,
-                  child: BannerItem(imageUrl: imageUrl!),
+                  child: BannerItem(
+                    imageUrl: imageUrl!,
+                    id: id,
+                  ),
                 );
               },
             ),

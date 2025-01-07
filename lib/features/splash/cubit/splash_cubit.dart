@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tmdb/features/splash/bloc/splash_state.dart';
-import 'package:tmdb/features/splash/bloc/splash_status.dart';
+import 'package:tmdb/features/splash/cubit/splash_state.dart';
+import 'package:tmdb/features/splash/cubit/splash_status.dart';
 
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit() : super(SplashState(initStatus: InitInitial()));

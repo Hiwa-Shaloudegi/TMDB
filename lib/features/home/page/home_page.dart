@@ -20,9 +20,23 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
   @override
   void initState() {
+    _tabController = TabController(
+      length: 4,
+      initialIndex: 0,
+      vsync: this,
+    );
+
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        context.read<HomeCubit>().changeTab(_tabController.index);
+      }
+    });
+
     context.read<HomeCubit>().getHomeData();
     super.initState();
   }
@@ -72,7 +86,8 @@ class _HomePageState extends State<HomePage> {
                       PinnedHeaderSliver(
                         child: Container(
                           color: AppColors.backgroundDark,
-                          child: const AppFilterTabBar(
+                          child: AppFilterTabBar(
+                            tabController: _tabController,
                             tabs: [
                               Tab(text: 'Now playing'),
                               Tab(text: 'Upcoming'),

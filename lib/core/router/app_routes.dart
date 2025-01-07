@@ -6,9 +6,10 @@ import 'package:tmdb/features/home/cubit/home_cubit.dart';
 import 'package:tmdb/features/home/page/home_page.dart';
 import 'package:tmdb/features/main/cubit/main_cubit.dart';
 import 'package:tmdb/features/main/main_page.dart';
+import 'package:tmdb/features/movie_detail/cubit/movie_detail_cubit.dart';
 import 'package:tmdb/features/movie_detail/page/movie_detail_page.dart';
 import 'package:tmdb/features/search/page/search_page.dart';
-import 'package:tmdb/features/splash/bloc/splash_cubit.dart';
+import 'package:tmdb/features/splash/cubit/splash_cubit.dart';
 import 'package:tmdb/features/splash/pages/splash_page.dart';
 
 abstract class AppRoutes {
@@ -17,7 +18,7 @@ abstract class AppRoutes {
   static const String home = '/home';
   static const String search = '/search';
   static const String favorites = '/favorites';
-  static const String movieDetail = '/movie-detail';
+  static const String movieDetail = '/movie-detail/:id';
 
   static final goRouter = GoRouter(
     initialLocation: AppRoutes.splash,
@@ -55,9 +56,17 @@ abstract class AppRoutes {
         builder: (context, state) => const FavoritesPage(),
       ),
       GoRoute(
-        path: AppRoutes.movieDetail,
-        builder: (context, state) => const MovieDetailPage(),
-      ),
+          path: AppRoutes.movieDetail,
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+
+            return BlocProvider(
+              create: (context) => MovieDetailCubit(
+                getIt(),
+              ),
+              child: MovieDetailPage(movieId: id),
+            );
+          }),
     ],
   );
 }

@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
 
-class MovieCastGridView extends StatelessWidget {
-  const MovieCastGridView({super.key});
+class MovieCastGridView extends StatefulWidget {
+  const MovieCastGridView({super.key, required this.movieId});
 
+  final String movieId;
+
+  @override
+  State<MovieCastGridView> createState() => _MovieCastGridViewState();
+}
+
+class _MovieCastGridViewState extends State<MovieCastGridView> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);

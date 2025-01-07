@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
+import 'package:tmdb/features/movie_detail/cubit/movie_detail_cubit.dart';
 
-class MovieReviews extends StatelessWidget {
-  const MovieReviews({super.key});
+class MovieReviews extends StatefulWidget {
+  const MovieReviews({super.key, required this.movieId});
+
+  final String movieId;
+
+  @override
+  State<MovieReviews> createState() => _MovieReviewsState();
+}
+
+class _MovieReviewsState extends State<MovieReviews> {
+  @override
+  void initState() {
+    context.read<MovieDetailCubit>().getMovieReviews(id: widget.movieId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
