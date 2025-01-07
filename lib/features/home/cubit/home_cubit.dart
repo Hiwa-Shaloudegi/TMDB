@@ -17,7 +17,13 @@ class HomeCubit extends Cubit<HomeState> {
     required MoviesListRepo moviesListRepo,
   })  : _moviesListRepo = moviesListRepo,
         _trendingRepo = trendingRepo,
-        super(HomeState(getHomeDataStatus: GetHomeDataInitial()));
+        super(
+          HomeState(
+            currentTabIndex: 0,
+            getHomeDataStatus: GetHomeDataInitial(),
+            getTabMoviesStatus: GetTabMoviesInitial(),
+          ),
+        );
 
   getHomeData() async {
     emit(state.copyWith(getHomeDataStatus: GetHomeDataLoading()));
@@ -41,5 +47,9 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(
           getHomeDataStatus: GetHomeDataError('An unexpected error occurred')));
     }
+  }
+
+  changeTab(int index) {
+    emit(state.copyWith(currentTabIndex: index));
   }
 }

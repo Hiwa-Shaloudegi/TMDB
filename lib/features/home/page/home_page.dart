@@ -81,7 +81,8 @@ class _HomePageState extends State<HomePage> {
                       16.sh,
                       const SliverPadding(
                         padding: EdgeInsets.symmetric(
-                            horizontal: AppSizes.pagePadding),
+                          horizontal: AppSizes.pagePadding,
+                        ),
                         sliver: MovieTabView(),
                       ),
                       16.sh,

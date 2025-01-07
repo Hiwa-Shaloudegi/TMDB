@@ -22,3 +22,19 @@ final class GetHomeDataError extends GetHomeDataStatus {
   final String message;
   GetHomeDataError(this.message);
 }
+
+// GetTabMovies
+abstract class GetTabMoviesStatus {}
+
+final class GetTabMoviesInitial extends GetTabMoviesStatus {}
+
+final class GetTabMoviesLoading extends GetTabMoviesStatus {}
+
+final class GetTabMoviesSuccess extends GetTabMoviesStatus {
+  final tabMovies = [];
+}
+
+final class GetTabMoviesError extends GetTabMoviesStatus {
+  final String message;
+  GetTabMoviesError(this.message);
+}

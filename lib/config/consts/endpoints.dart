@@ -12,7 +12,7 @@ abstract class Endpoints {
   static const popular = 'movie/popular';
 
   // Movies
-  static const movieDetails = 'movie/';
+  static const movieDetails = 'movie/{movie_id}';
   static const movieReviews = 'movie/{movie_id}/reviews';
   static const movieCast = 'movie/{movie_id}/credits';
 
