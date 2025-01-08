@@ -62,186 +62,177 @@ class _MovieDaState extends State<MovieDetailPage>
           } else if (state.getMovieDetailsStatus is GetMovieDetailsSuccess) {
             final getMovieDetailsStatus =
                 (state.getMovieDetailsStatus as GetMovieDetailsSuccess);
-            return SafeArea(
-              child: DefaultTabController(
-                length: 3,
-                child: CustomScrollView(
-                  slivers: [
-                    SliverMainAppBar(
-                      title: getMovieDetailsStatus.movieDetail.title ??
-                          'Movie Detail',
-                      trailing: SvgPicture.asset('assets/icons/heart.svg'),
-                    ),
-                    16.sh,
-                    SliverToBoxAdapter(
-                      child: Container(
-                        width: double.infinity,
-                        height: size.height * 0.3,
-                        decoration: BoxDecoration(
-                          color: AppColors.shimmerBaseDark,
-                          borderRadius: const BorderRadius.vertical(
-                            bottom: Radius.circular(16),
-                          ),
-                          image: DecorationImage(
-                            image: CachedNetworkImageProvider(
-                              getMovieDetailsStatus.movieDetail.backdropPath ??
-                                  '',
+
+            return NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverMainAppBar(
+                    title: getMovieDetailsStatus.movieDetail.title ??
+                        'Movie Detail',
+                    trailing: SvgPicture.asset('assets/icons/heart.svg'),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        // Poster and Title Section
+                        Container(
+                          width: double.infinity,
+                          height: size.height * 0.3,
+                          decoration: BoxDecoration(
+                            color: AppColors.shimmerBaseDark,
+                            borderRadius: const BorderRadius.vertical(
+                              bottom: Radius.circular(16),
                             ),
-                            fit: BoxFit.cover,
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                getMovieDetailsStatus
+                                        .movieDetail.backdropPath ??
+                                    '',
+                              ),
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          children: [
-                            Positioned(
-                              right: 16,
-                              bottom: 16,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 4,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: AppColors.containerBannerSurface,
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Transform.scale(
-                                      scale: 1.2,
-                                      child: SvgPicture.asset(
-                                          'assets/icons/star.svg'),
-                                    ),
-                                    8.w,
-                                    Text(
-                                      getMovieDetailsStatus
-                                          .movieDetail.voteAverage
-                                          .toString(),
-                                      style: const TextStyle(
-                                        color: Colors.amber,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              Positioned(
+                                right: 16,
+                                bottom: 16,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 4,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.containerBannerSurface,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Transform.scale(
+                                        scale: 1.2,
+                                        child: SvgPicture.asset(
+                                            'assets/icons/star.svg'),
                                       ),
-                                    )
+                                      8.w,
+                                      Text(
+                                        getMovieDetailsStatus
+                                            .movieDetail.voteAverage
+                                            .toString(),
+                                        style: const TextStyle(
+                                          color: Colors.amber,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 16,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                bottom: -(size.height * 0.17) / 2,
+                                left: 40,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: size.width * 0.26,
+                                      height: size.height * 0.17,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.shade800,
+                                        borderRadius: BorderRadius.circular(16),
+                                        image: DecorationImage(
+                                          image: CachedNetworkImageProvider(
+                                            getMovieDetailsStatus
+                                                    .movieDetail.posterPath ??
+                                                '',
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    16.w,
+                                    Container(
+                                      width: size.width -
+                                          ((size.width * 0.26) + 40 + 16),
+                                      height: (size.height * 0.15) / 2,
+                                      padding: const EdgeInsets.only(right: 4),
+                                      child: Text(
+                                        getMovieDetailsStatus
+                                                .movieDetail.title ??
+                                            'No title',
+                                        style: textTheme.headlineMedium,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ),
-                            Positioned(
-                              bottom: -(size.height * 0.17) / 2,
-                              left: 40,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    width: size.width * 0.26,
-                                    height: size.height * 0.17,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade800,
-                                      borderRadius: BorderRadius.circular(16),
-                                      image: DecorationImage(
-                                        image: CachedNetworkImageProvider(
-                                          getMovieDetailsStatus
-                                                  .movieDetail.posterPath ??
-                                              '',
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  16.w,
-                                  Container(
-                                    width: size.width -
-                                        ((size.width * 0.26) + 40 + 16),
-                                    height: (size.height * 0.15) / 2,
-                                    padding: const EdgeInsets.only(right: 4),
-                                    child: Text(
-                                      getMovieDetailsStatus.movieDetail.title ??
-                                          'No title',
-                                      style: textTheme.headlineMedium,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-
-                    // Space
-                    ((size.height * 0.17) / 2).sh,
-                    32.sh,
-                    SliverToBoxAdapter(
-                      child: Center(
-                        child: SizedBox(
-                          width: size.width * 0.7,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SvgPicture.asset(
-                                  'assets/icons/calendar_blank.svg'),
-                              Text(
-                                '2021',
-                                style: textTheme.labelMedium,
-                              ),
-                              Text(
-                                '|',
-                                style: textTheme.labelMedium,
-                              ),
-                              SvgPicture.asset('assets/icons/clock.svg'),
-                              Text(
-                                '${getMovieDetailsStatus.movieDetail.runtime} Minutes',
-                                style: textTheme.labelMedium,
-                              ),
-                              if (getMovieDetailsStatus.movieDetail.geners !=
-                                  null) ...[
-                                Text(
-                                  '|',
-                                  style: textTheme.labelMedium,
-                                ),
-                                SvgPicture.asset('assets/icons/ticket.svg'),
-                                Text(
-                                  getMovieDetailsStatus
-                                      .movieDetail.geners!.last.name,
-                                  style: textTheme.labelMedium,
-                                ),
-                              ],
                             ],
                           ),
                         ),
-                      ),
-                    ),
-                    32.sh,
-                    PinnedHeaderSliver(
-                      child: Container(
-                        color: AppColors.backgroundDark,
-                        child: AppFilterTabBar(
-                          tabController: _tabController,
-                          tabs: const [
-                            Tab(text: 'About Movie'),
-                            Tab(text: 'Reviews'),
-                            Tab(text: 'Cast'),
-                          ],
+                        SizedBox(height: ((size.height * 0.17) / 2) + 32),
+
+                        Center(
+                          child: SizedBox(
+                            width: size.width * 0.7,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SvgPicture.asset(
+                                    'assets/icons/calendar_blank.svg'),
+                                Text(
+                                  '2021',
+                                  style: textTheme.labelMedium,
+                                ),
+                                Text('|', style: textTheme.labelMedium),
+                                SvgPicture.asset('assets/icons/clock.svg'),
+                                Text(
+                                  '${getMovieDetailsStatus.movieDetail.runtime} Minutes',
+                                  style: textTheme.labelMedium,
+                                ),
+                                if (getMovieDetailsStatus.movieDetail.geners !=
+                                    null) ...[
+                                  Text('|', style: textTheme.labelMedium),
+                                  SvgPicture.asset('assets/icons/ticket.svg'),
+                                  Text(
+                                    getMovieDetailsStatus
+                                        .movieDetail.geners!.last.name,
+                                    style: textTheme.labelMedium,
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
+                        const SizedBox(height: 32),
+                      ],
                     ),
-                    24.sh,
-                    SliverFillRemaining(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          MovieDescView(),
-                          MovieReviews(movieId: widget.movieId),
-                          MovieCastGridView(movieId: widget.movieId),
+                  ),
+                  PinnedHeaderSliver(
+                    child: Container(
+                      color: AppColors.backgroundDark,
+                      child: AppFilterTabBar(
+                        tabController: _tabController,
+                        tabs: const [
+                          Tab(text: 'About Movie'),
+                          Tab(text: 'Reviews'),
+                          Tab(text: 'Cast'),
                         ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ];
+              },
+              body: TabBarView(
+                controller: _tabController,
+                children: [
+                  const MovieDescView(),
+                  MovieReviews(movieId: widget.movieId),
+                  MovieCastGridView(movieId: widget.movieId),
+                ],
               ),
             );
           }

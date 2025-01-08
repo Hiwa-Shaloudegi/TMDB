@@ -21,7 +21,10 @@ class MovieReviews extends StatefulWidget {
 class _MovieReviewsState extends State<MovieReviews> {
   @override
   void initState() {
-    context.read<MovieDetailCubit>().getMovieReviews(id: widget.movieId);
+    if (context.read<MovieDetailCubit>().state.getMovieReviewsStatus
+        is! GetMovieReviewsSuccess) {
+      context.read<MovieDetailCubit>().getMovieReviews(id: widget.movieId);
+    }
     super.initState();
   }
 
@@ -45,8 +48,7 @@ class _MovieReviewsState extends State<MovieReviews> {
           });
         } else if (reviewsStatus is GetMovieReviewsSuccess) {
           return ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 4,
+            itemCount: reviewsStatus.reviewes.length,
             separatorBuilder: (context, index) => 40.h,
             itemBuilder: (context, index) {
               var review = reviewsStatus.reviewes[index];
