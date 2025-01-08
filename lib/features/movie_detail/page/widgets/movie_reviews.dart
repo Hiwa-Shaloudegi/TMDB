@@ -46,82 +46,95 @@ class _MovieReviewsState extends State<MovieReviews> {
                 .getMovieReviews(id: widget.movieId);
           });
         } else if (reviewsStatus is GetMovieReviewsSuccess) {
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.separated(
-                  itemCount: reviewsStatus.reviewes.length,
-                  separatorBuilder: (context, index) => 40.h,
-                  itemBuilder: (context, index) {
-                    var review = reviewsStatus.reviewes[index];
+          return reviewsStatus.reviewes.isEmpty
+              ? Center(
+                  child: Text(
+                    "No reviews for this movie :(",
+                    style: textTheme.titleLarge,
+                  ),
+                )
+              : Column(
+                  children: [
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: reviewsStatus.reviewes.length,
+                        separatorBuilder: (context, index) => 40.h,
+                        itemBuilder: (context, index) {
+                          var review = reviewsStatus.reviewes[index];
 
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppSizes.pagePadding),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            children: [
-                              SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: (review.avatarUrl == null) ||
-                                        (review.avatarUrl!.isEmpty)
-                                    ? Image.asset('assets/images/person.png')
-                                    : CachedNetworkImage(
-                                        imageUrl: review.avatarUrl!,
-                                        fit: BoxFit.cover,
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                              ),
-                              16.h,
-                              Text(
-                                review.rating == null
-                                    ? ''
-                                    : review.rating.toString(),
-                                style:
-                                    const TextStyle(color: AppColors.secondary),
-                              ),
-                            ],
-                          ),
-                          16.w,
-                          Expanded(
-                            child: Column(
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: AppSizes.pagePadding),
+                            child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  review.authorName,
-                                  style: textTheme.titleLarge!
-                                      .copyWith(fontSize: 15),
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: (review.avatarUrl == null) ||
+                                              (review.avatarUrl!.isEmpty)
+                                          ? Image.asset(
+                                              'assets/images/person.png')
+                                          : CachedNetworkImage(
+                                              imageUrl: review.avatarUrl!,
+                                              fit: BoxFit.cover,
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Image.asset(
+                                                      'assets/images/person.png'),
+                                            ),
+                                    ),
+                                    16.h,
+                                    Text(
+                                      review.rating == null
+                                          ? ''
+                                          : review.rating.toString(),
+                                      style: const TextStyle(
+                                          color: AppColors.secondary),
+                                    ),
+                                  ],
                                 ),
-                                16.h,
-                                Text(
-                                  review.content,
-                                  style: textTheme.bodyMedium,
+                                16.w,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        review.authorName,
+                                        style: textTheme.titleLarge!
+                                            .copyWith(fontSize: 15),
+                                      ),
+                                      16.h,
+                                      Text(
+                                        review.content,
+                                        style: textTheme.bodyMedium,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
-                          ),
-                        ],
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-              16.h,
-            ],
-          );
+                    ),
+                    16.h,
+                  ],
+                );
         }
         return const SizedBox.shrink();
       },

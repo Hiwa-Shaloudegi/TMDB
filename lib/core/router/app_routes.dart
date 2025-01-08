@@ -8,6 +8,7 @@ import 'package:tmdb/features/main/cubit/main_cubit.dart';
 import 'package:tmdb/features/main/main_page.dart';
 import 'package:tmdb/features/movie_detail/cubit/movie_detail_cubit.dart';
 import 'package:tmdb/features/movie_detail/page/movie_detail_page.dart';
+import 'package:tmdb/features/search/cubit/search_cubit.dart';
 import 'package:tmdb/features/search/page/search_page.dart';
 import 'package:tmdb/features/splash/cubit/splash_cubit.dart';
 import 'package:tmdb/features/splash/pages/splash_page.dart';
@@ -49,7 +50,10 @@ abstract class AppRoutes {
       ),
       GoRoute(
         path: AppRoutes.search,
-        builder: (context, state) => const SearchPage(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => SearchCubit(getIt()),
+          child: const SearchPage(),
+        ),
       ),
       GoRoute(
         path: AppRoutes.favorites,

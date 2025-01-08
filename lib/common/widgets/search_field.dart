@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
 import 'package:tmdb/features/main/cubit/main_cubit.dart';
+import 'package:tmdb/features/search/cubit/search_cubit.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({
@@ -33,11 +34,21 @@ class _SearchFieldState extends State<SearchField> {
             onTap: () => context.read<MainCubit>().changeNavIndex(1),
             child: TextField(
               controller: widget.controller,
-              // onTap: () {
-              //   ref.read(navIndexValueProvider.notifier).state = 1;
-              // },
+              onSubmitted: (value) {
+                if (value.isNotEmpty) {
+                  context.read<SearchCubit>().searchMovie(query: value);
+                }
+              },
               // TODO: fix auto focus
               // autofocus: widget.isEnabled,
+              onChanged: (value) {
+                if (value.length >= 3) {
+                  context.read<SearchCubit>().searchMovie(query: value);
+                }
+                if (value.isEmpty) {
+                  context.read<SearchCubit>().claerSearchResults();
+                }
+              },
               decoration: InputDecoration(
                 enabled: widget.isEnabled,
                 hintText: "Search",

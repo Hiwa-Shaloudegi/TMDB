@@ -7,6 +7,7 @@ import 'package:tmdb/features/home/cubit/home_cubit.dart';
 import 'package:tmdb/features/home/page/home_page.dart';
 import 'package:tmdb/features/main/cubit/main_cubit.dart';
 import 'package:tmdb/features/main/widgets/svg_nav_icon.dart';
+import 'package:tmdb/features/search/cubit/search_cubit.dart';
 import 'package:tmdb/features/search/page/search_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -23,10 +24,15 @@ class _MainSkeletonState extends State<MainPage> {
         moviesListRepo: getIt(),
         trendingRepo: getIt(),
       ),
-      child: HomePage(),
+      child: const HomePage(),
     ),
-    SearchPage(),
-    FavoritesPage(),
+    BlocProvider(
+      create: (context) => SearchCubit(
+        getIt(),
+      ),
+      child: const SearchPage(),
+    ),
+    const FavoritesPage(),
   ];
 
   @override

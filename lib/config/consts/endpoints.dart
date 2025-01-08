@@ -18,4 +18,7 @@ abstract class Endpoints {
 
   // Search
   static const searchMovie = 'search/movie';
+
+  // Genre
+  static const movieGenreList = 'genre/movie/list';
 }

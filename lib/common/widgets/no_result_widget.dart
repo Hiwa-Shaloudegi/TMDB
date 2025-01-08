@@ -19,34 +19,31 @@ class NoResultWidget extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     final textTheme = Theme.of(context).textTheme;
 
-    return SliverFillRemaining(
-      hasScrollBody: false,
-      child: Center(
-        child: Container(
-          width: size.width * 0.6,
-          // color: Colors.amber,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Transform.scale(
-                scale: 1.5,
-                child: SvgPicture.asset(imagePath),
-              ),
-              32.h,
-              Text(
-                title,
-                style: textTheme.titleMedium,
-                textAlign: TextAlign.center,
-              ),
-              8.h,
-              Text(
-                subTitle,
-                style: textTheme.bodySmall,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
+    return Center(
+      child: Container(
+        width: size.width * 0.6,
+        // color: Colors.amber,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Transform.scale(
+              scale: 1.5,
+              child: SvgPicture.asset(imagePath),
+            ),
+            32.h,
+            Text(
+              title,
+              style: textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            8.h,
+            Text(
+              subTitle,
+              style: textTheme.bodySmall,
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );

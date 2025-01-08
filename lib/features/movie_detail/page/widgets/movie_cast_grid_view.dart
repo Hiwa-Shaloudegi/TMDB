@@ -29,6 +29,7 @@ class _MovieCastGridViewState extends State<MovieCastGridView> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
+    final textTheme = Theme.of(context).textTheme;
 
     return BlocBuilder<MovieDetailCubit, MovieDetailState>(
       builder: (context, state) {
@@ -43,53 +44,61 @@ class _MovieCastGridViewState extends State<MovieCastGridView> {
             context.read<MovieDetailCubit>().getMovieCast(id: widget.movieId);
           });
         } else if (castStatus is GetMovieCastSuccess) {
-          return Column(
-            children: [
-              24.h,
-              Expanded(
-                child: GridView.builder(
-                  itemCount: castStatus.casts.length,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisExtent: size.height * 0.2,
-                    crossAxisSpacing: 10,
+          return castStatus.casts.isEmpty
+              ? Center(
+                  child: Text(
+                    "No cast for this movie :(",
+                    style: textTheme.titleLarge,
                   ),
-                  itemBuilder: (context, index) {
-                    var cast = castStatus.casts[index];
-
-                    return Column(
-                      children: [
-                        Container(
-                          width: size.width * 0.25,
-                          height: size.width * 0.25,
-                          decoration: BoxDecoration(
-                            color: AppColors.shimmerBaseDark,
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                              image: cast.profileUrl == null
-                                  ? const AssetImage('assets/images/person.png')
-                                  : CachedNetworkImageProvider(
-                                      cast.profileUrl!,
-                                    ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                )
+              : Column(
+                  children: [
+                    24.h,
+                    Expanded(
+                      child: GridView.builder(
+                        itemCount: castStatus.casts.length,
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisExtent: size.height * 0.2,
+                          crossAxisSpacing: 10,
                         ),
-                        16.h,
-                        Text(
-                          cast.name,
-                          textAlign: TextAlign.center,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      ],
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
+                        itemBuilder: (context, index) {
+                          var cast = castStatus.casts[index];
+
+                          return Column(
+                            children: [
+                              Container(
+                                width: size.width * 0.25,
+                                height: size.width * 0.25,
+                                decoration: BoxDecoration(
+                                  color: AppColors.shimmerBaseDark,
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: cast.profileUrl == null
+                                        ? const AssetImage(
+                                            'assets/images/person.png')
+                                        : CachedNetworkImageProvider(
+                                            cast.profileUrl!,
+                                          ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              16.h,
+                              Text(
+                                cast.name,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              )
+                            ],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                );
         }
         return const SizedBox.shrink();
       },

@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:tmdb/config/consts/endpoints.dart';
 import 'package:tmdb/core/services/http_client/api_interceptor.dart';
+import 'package:tmdb/data/data_src/local/genre/genre_data_src_local.dart';
+import 'package:tmdb/data/data_src/remote/genre/genre_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/movies/movies_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/movies_list/movies_list_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/search/search_data_src_remote.dart';
@@ -86,6 +88,18 @@ void initDataSources() {
       getIt(),
     ),
   );
+
+  getIt.registerSingleton<GenreDataSrcRemote>(
+    GenreDataSrcRemote(
+      getIt(),
+      getIt(),
+    ),
+  );
+  getIt.registerSingleton<GenreDataSrcLocal>(
+    GenreDataSrcLocal(
+      getIt(),
+    ),
+  );
 }
 
 void initRepos() {
@@ -109,6 +123,8 @@ void initRepos() {
 
   getIt.registerSingleton<SearchRepo>(
     SearchRepo(
+      getIt(),
+      getIt(),
       getIt(),
     ),
   );

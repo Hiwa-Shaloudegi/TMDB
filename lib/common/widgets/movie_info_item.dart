@@ -1,11 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
+import 'package:tmdb/features/search/models/movie_info_model.dart';
 
 class MovieInfoItem extends StatelessWidget {
-  const MovieInfoItem({super.key});
+  const MovieInfoItem({
+    super.key,
+    required this.movie,
+  });
+
+  final MovieInfoModel movie;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +23,6 @@ class MovieInfoItem extends StatelessWidget {
       width: double.infinity,
       height: size.height * 0.18,
       margin: const EdgeInsets.symmetric(horizontal: AppSizes.pagePadding),
-      decoration: const BoxDecoration(),
       child: Row(
         children: [
           Container(
@@ -24,6 +30,10 @@ class MovieInfoItem extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.shimmerBaseDark,
               borderRadius: BorderRadius.circular(16),
+              image: DecorationImage(
+                image: CachedNetworkImageProvider(movie.posterUrl!),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           16.w,
@@ -33,10 +43,12 @@ class MovieInfoItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  'Spiderman',
+                  movie.title,
                   style: textTheme.titleMedium,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                8.h,
+                4.h,
                 Row(
                   children: [
                     Transform.scale(
@@ -44,9 +56,9 @@ class MovieInfoItem extends StatelessWidget {
                       child: SvgPicture.asset('assets/icons/star.svg'),
                     ),
                     8.w,
-                    const Text(
-                      '8.2',
-                      style: TextStyle(
+                    Text(
+                      movie.voteAverage.toString(),
+                      style: const TextStyle(
                         color: Colors.amber,
                         fontWeight: FontWeight.w500,
                         fontSize: 16,
@@ -72,19 +84,19 @@ class MovieInfoItem extends StatelessWidget {
                           SvgPicture.asset('assets/icons/calendar_blank.svg'),
                     ),
                     8.w,
-                    const Text('2019'),
+                    Text(movie.releaseDate),
                   ],
                 ),
-                Row(
-                  children: [
-                    Transform.scale(
-                      scale: 1.2,
-                      child: SvgPicture.asset('assets/icons/clock.svg'),
-                    ),
-                    8.w,
-                    const Text('139 mintes'),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Transform.scale(
+                //       scale: 1.2,
+                //       child: SvgPicture.asset('assets/icons/clock.svg'),
+                //     ),
+                //     8.w,
+                //     const Text('139 mintes'),
+                //   ],
+                // ),
               ],
             ),
           ),
