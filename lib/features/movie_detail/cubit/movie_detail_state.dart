@@ -55,7 +55,11 @@ final class GetMovieReviewsInitial extends GetMovieReviewsStatus {}
 
 final class GetMovieReviewsLoading extends GetMovieReviewsStatus {}
 
-final class GetMovieReviewsSuccess extends GetMovieReviewsStatus {}
+final class GetMovieReviewsSuccess extends GetMovieReviewsStatus {
+  final List<Review> reviewes;
+
+  GetMovieReviewsSuccess({required this.reviewes});
+}
 
 final class GetMovieReviewsError extends GetMovieReviewsStatus {
   final String message;

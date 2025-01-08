@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
+import 'package:tmdb/common/widgets/dot_loading.dart';
 import 'package:tmdb/common/widgets/sliver_main_app_bar.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
 import 'package:tmdb/common/widgets/app_filter_tabbar.dart';
@@ -53,10 +53,7 @@ class _MovieDaState extends State<MovieDetailPage>
         builder: (context, state) {
           if (state.getMovieDetailsStatus is GetMovieDetailsLoading) {
             return const Center(
-              child: SpinKitThreeBounce(
-                color: Colors.white,
-                size: 20,
-              ),
+              child: DotLoading(size: 20),
             );
           } else if (state.getMovieDetailsStatus is GetMovieDetailsError) {
             return const Center(

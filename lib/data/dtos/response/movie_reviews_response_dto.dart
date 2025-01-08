@@ -57,7 +57,9 @@ class Results {
 
   Results.fromJson(Map<String, dynamic> json) {
     author = json['author'];
-    authorDetails = json['author_details'];
+    authorDetails = json['author_details'] != null
+        ? AuthorDetails.fromJson(json['author_details'])
+        : null;
     content = json['content'];
     createdAt = json['created_at'];
     id = json['id'];
@@ -84,7 +86,7 @@ class AuthorDetails {
   String? name;
   String? username;
   String? avatarPath;
-  int? rating;
+  double? rating;
 
   AuthorDetails({this.name, this.username, this.avatarPath, this.rating});
 

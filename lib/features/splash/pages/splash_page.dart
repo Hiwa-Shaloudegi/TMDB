@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tmdb/common/widgets/dot_loading.dart';
 import 'package:tmdb/core/router/app_routes.dart';
 import 'package:tmdb/features/splash/cubit/splash_cubit.dart';
 import 'package:tmdb/features/splash/cubit/splash_state.dart';
@@ -37,10 +37,7 @@ class _SplashPageState extends State<SplashPage> {
               builder: (context, state) {
                 if (state.initStatus is InitLoading) {
                   return const Center(
-                    child: SpinKitThreeBounce(
-                      color: Colors.white,
-                      size: 30,
-                    ),
+                    child: DotLoading(),
                   );
                 }
                 return const SizedBox.shrink();

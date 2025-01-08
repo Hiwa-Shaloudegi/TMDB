@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tmdb/data/repos/movies/movies_repo.dart';
 import 'package:tmdb/features/movie_detail/model/movie_detail.dart';
+import 'package:tmdb/features/movie_detail/model/review.dart';
 
 part 'movie_detail_state.dart';
 
@@ -63,7 +64,29 @@ class MovieDetailCubit extends Cubit<MovieDetailState> {
   getMovieReviews({required String id}) async {
     emit(state.copyWith(getMovieReviewsStatus: GetMovieReviewsLoading()));
 
-    try {} catch (e) {
+    try {
+      final movieReviewsResponseDto = await _moviesRepo.getMovieReviews(id: id);
+      final List<Review> reviewes = movieReviewsResponseDto.results!
+          .map(
+            (e) => Review(
+              authorName: e.author!,
+              content: e.content!,
+              rating: e.authorDetails!.rating != null
+                  ? double.parse(e.authorDetails!.rating!.toStringAsFixed(2))
+                  : null,
+              avatarUrl: e.authorDetails!.avatarPath != null
+                  ? e.authorDetails?.avatarPath
+                  : null,
+            ),
+          )
+          .toList();
+
+      emit(
+        state.copyWith(
+          getMovieReviewsStatus: GetMovieReviewsSuccess(reviewes: reviewes),
+        ),
+      );
+    } catch (e) {
       emit(
         state.copyWith(
           getMovieReviewsStatus:
