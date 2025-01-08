@@ -4,21 +4,25 @@ class MovieDetailState extends Equatable {
   // Status
   final GetMovieDetailsStatus getMovieDetailsStatus;
   final GetMovieReviewsStatus getMovieReviewsStatus;
+  final GetMovieCastStatus getMovieCastStatus;
 
   const MovieDetailState({
     required this.getMovieDetailsStatus,
     required this.getMovieReviewsStatus,
+    required this.getMovieCastStatus,
   });
 
   MovieDetailState copyWith({
     GetMovieDetailsStatus? getMovieDetailsStatus,
     GetMovieReviewsStatus? getMovieReviewsStatus,
+    GetMovieCastStatus? getMovieCastStatus,
   }) {
     return MovieDetailState(
       getMovieDetailsStatus:
           getMovieDetailsStatus ?? this.getMovieDetailsStatus,
       getMovieReviewsStatus:
           getMovieReviewsStatus ?? this.getMovieReviewsStatus,
+      getMovieCastStatus: getMovieCastStatus ?? this.getMovieCastStatus,
     );
   }
 
@@ -26,6 +30,7 @@ class MovieDetailState extends Equatable {
   List<Object> get props => [
         getMovieDetailsStatus,
         getMovieReviewsStatus,
+        getMovieCastStatus,
       ];
 }
 
@@ -65,4 +70,23 @@ final class GetMovieReviewsError extends GetMovieReviewsStatus {
   final String message;
 
   GetMovieReviewsError(this.message);
+}
+
+// getMovieCast
+abstract class GetMovieCastStatus {}
+
+final class GetMovieCastInitial extends GetMovieCastStatus {}
+
+final class GetMovieCastLoading extends GetMovieCastStatus {}
+
+final class GetMovieCastSuccess extends GetMovieCastStatus {
+  final List<CastModel> casts;
+
+  GetMovieCastSuccess({required this.casts});
+}
+
+final class GetMovieCastError extends GetMovieCastStatus {
+  final String message;
+
+  GetMovieCastError(this.message);
 }

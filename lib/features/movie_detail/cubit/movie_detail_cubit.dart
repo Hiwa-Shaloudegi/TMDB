@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tmdb/data/repos/movies/movies_repo.dart';
+import 'package:tmdb/features/movie_detail/model/cast.dart';
 import 'package:tmdb/features/movie_detail/model/movie_detail.dart';
 import 'package:tmdb/features/movie_detail/model/review.dart';
 
@@ -14,6 +15,7 @@ class MovieDetailCubit extends Cubit<MovieDetailState> {
           MovieDetailState(
             getMovieDetailsStatus: GetMovieDetailsInitial(),
             getMovieReviewsStatus: GetMovieReviewsInitial(),
+            getMovieCastStatus: GetMovieCastInitial(),
           ),
         );
 
@@ -91,6 +93,35 @@ class MovieDetailCubit extends Cubit<MovieDetailState> {
         state.copyWith(
           getMovieReviewsStatus:
               GetMovieReviewsError('An unexpected error occurred'),
+        ),
+      );
+    }
+  }
+
+  getMovieCast({required String id}) async {
+    emit(state.copyWith(getMovieCastStatus: GetMovieCastLoading()));
+
+    try {
+      final movieCastResponseDto = await _moviesRepo.getMovieCast(id: id);
+      final List<CastModel> casts = movieCastResponseDto.cast!
+          .map(
+            (e) => CastModel(
+              id: e.id!,
+              name: e.name!,
+              profileUrl: e.profilePath,
+            ),
+          )
+          .toList();
+
+      emit(
+        state.copyWith(
+          getMovieCastStatus: GetMovieCastSuccess(casts: casts),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          getMovieCastStatus: GetMovieCastError('An unexpected error occurred'),
         ),
       );
     }
