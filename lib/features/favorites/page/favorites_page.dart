@@ -22,7 +22,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
         slivers: [
           const SliverMainAppBar(title: 'Favorites'),
           if (favMovieList.isEmpty)
-            const SliverToBoxAdapter(
+            const SliverFillRemaining(
+              hasScrollBody: false,
               child: NoResultWidget(
                 imagePath: 'assets/images/magic_box.svg',
                 title: 'There Is No Movie Yet!',

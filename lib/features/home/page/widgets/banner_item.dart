@@ -34,12 +34,6 @@ class BannerItem extends StatelessWidget {
         ),
         child: CachedNetworkImage(
           imageUrl: imageUrl,
-          fit: BoxFit.cover,
-          // placeholder: (context, url) =>
-          // CupertinoActivityIndicator(
-          //   radius: 16,
-          //   color: Colors.white,
-          // ),
           imageBuilder: (context, imageProvider) => Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),

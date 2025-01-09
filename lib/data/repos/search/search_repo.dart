@@ -20,8 +20,8 @@ class SearchRepo {
       final searchMovieResponseDto =
           await _searchDataSrcRemote.searchMovie(query: query);
 
-      final genres = await _genreDataSrcLocal.getAllGenres();
-      if (genres.isEmpty) {
+      final allGenres = await _genreDataSrcLocal.getAllGenres();
+      if (allGenres.isEmpty) {
         final movieGenreListResponseDto =
             await _genreDataSrcRemote.getMovieGenres();
         final List<GenreModel> genreList = movieGenreListResponseDto.genres!
@@ -35,18 +35,19 @@ class SearchRepo {
         _genreDataSrcLocal.saveGenreList(genreList);
       }
 
-      List<MovieInfoModel> movieList = searchMovieResponseDto.results!
-          .map(
-            (e) => MovieInfoModel(
-              id: e.id!,
-              posterUrl: e.posterPath,
-              title: e.title!,
-              voteAverage: e.voteAverage,
-              releaseDate: e.releaseDate!,
-              genre: genres.last,
-            ),
-          )
-          .toList();
+      List<MovieInfoModel> movieList = searchMovieResponseDto.results!.map((e) {
+        final movieGenres = e.genreIds!
+            .map((id) => allGenres.firstWhere((genre) => genre.id == id))
+            .toList();
+
+        return MovieInfoModel(
+            id: e.id!,
+            posterUrl: e.posterPath,
+            title: e.title!,
+            voteAverage: e.voteAverage,
+            releaseDate: e.releaseDate!,
+            genres: movieGenres);
+      }).toList();
 
       return movieList;
     } catch (e) {

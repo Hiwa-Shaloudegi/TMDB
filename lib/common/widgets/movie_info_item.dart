@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
@@ -25,14 +26,23 @@ class MovieInfoItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: AppSizes.pagePadding),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: size.width * 0.3,
-            decoration: BoxDecoration(
-              color: AppColors.shimmerBaseDark,
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(movie.posterUrl!),
-                fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: movie.posterUrl!,
+              imageBuilder: (context, imageProvider) => Container(
+                decoration: BoxDecoration(
+                  color: AppColors.shimmerBaseDark,
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    alignment: FractionalOffset.center,
+                    image: imageProvider,
+                  ),
+                ),
+              ),
+              errorWidget: (context, url, error) => const Skeleton.ignore(
+                child: Icon(Icons.error),
               ),
             ),
           ),
@@ -73,7 +83,14 @@ class MovieInfoItem extends StatelessWidget {
                       child: SvgPicture.asset('assets/icons/ticket.svg'),
                     ),
                     8.w,
-                    const Text('Action'),
+                    Flexible(
+                      child: Text(
+                        movie.genres!.map((e) => e.name).join(', '),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ),
                   ],
                 ),
                 Row(

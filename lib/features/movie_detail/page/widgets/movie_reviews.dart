@@ -79,7 +79,6 @@ class _MovieReviewsState extends State<MovieReviews> {
                                               'assets/images/person.png')
                                           : CachedNetworkImage(
                                               imageUrl: review.avatarUrl!,
-                                              fit: BoxFit.cover,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                       Container(

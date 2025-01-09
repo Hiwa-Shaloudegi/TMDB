@@ -55,7 +55,6 @@ class MovieTabView extends StatelessWidget {
                         ? null
                         : CachedNetworkImage(
                             imageUrl: movie.poster,
-                            fit: BoxFit.cover,
                             imageBuilder: (context, imageProvider) => Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
@@ -64,6 +63,10 @@ class MovieTabView extends StatelessWidget {
                                   fit: BoxFit.cover,
                                 ),
                               ),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                const Skeleton.ignore(
+                              child: Icon(Icons.error),
                             ),
                           ),
                   ),

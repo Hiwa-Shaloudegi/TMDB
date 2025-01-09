@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/dot_loading.dart';
 import 'package:tmdb/common/widgets/sliver_main_app_bar.dart';
@@ -75,26 +76,41 @@ class _MovieDaState extends State<MovieDetailPage>
                     child: Column(
                       children: [
                         // Poster and Title Section
-                        Container(
-                          width: double.infinity,
-                          height: size.height * 0.3,
-                          decoration: BoxDecoration(
-                            color: AppColors.shimmerBaseDark,
-                            borderRadius: const BorderRadius.vertical(
-                              bottom: Radius.circular(16),
-                            ),
-                            image: DecorationImage(
-                              image: CachedNetworkImageProvider(
-                                getMovieDetailsStatus
+                        Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: size.height * 0.3,
+                              decoration: BoxDecoration(
+                                color: AppColors.shimmerBaseDark,
+                                borderRadius: const BorderRadius.vertical(
+                                  bottom: Radius.circular(16),
+                                ),
+                              ),
+                              child: CachedNetworkImage(
+                                imageUrl: getMovieDetailsStatus
                                         .movieDetail.backdropPath ??
                                     '',
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  decoration: BoxDecoration(
+                                    color: AppColors.shimmerBaseDark,
+                                    borderRadius: BorderRadius.circular(16),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      alignment: FractionalOffset.center,
+                                      image: imageProvider,
+                                    ),
+                                  ),
+                                ),
+                                errorWidget: (context, url, error) =>
+                                    const Skeleton.ignore(
+                                  child: Icon(Icons.error),
+                                ),
                               ),
-                              fit: BoxFit.cover,
                             ),
-                          ),
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            children: [
+                            ...[
                               Positioned(
                                 right: 16,
                                 bottom: 16,
@@ -141,13 +157,29 @@ class _MovieDaState extends State<MovieDetailPage>
                                       decoration: BoxDecoration(
                                         color: Colors.grey.shade800,
                                         borderRadius: BorderRadius.circular(16),
-                                        image: DecorationImage(
-                                          image: CachedNetworkImageProvider(
-                                            getMovieDetailsStatus
-                                                    .movieDetail.posterPath ??
-                                                '',
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl: getMovieDetailsStatus
+                                                .movieDetail.posterPath ??
+                                            '',
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          decoration: BoxDecoration(
+                                            color: AppColors.shimmerBaseDark,
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              alignment:
+                                                  FractionalOffset.center,
+                                              image: imageProvider,
+                                            ),
                                           ),
-                                          fit: BoxFit.cover,
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            const Skeleton.ignore(
+                                          child: Icon(Icons.error),
                                         ),
                                       ),
                                     ),
@@ -170,7 +202,7 @@ class _MovieDaState extends State<MovieDetailPage>
                                 ),
                               ),
                             ],
-                          ),
+                          ],
                         ),
                         SizedBox(height: ((size.height * 0.17) / 2) + 32),
 

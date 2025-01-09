@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/dot_loading.dart';
 import 'package:tmdb/common/widgets/retry_error_widget.dart';
@@ -71,19 +72,29 @@ class _MovieCastGridViewState extends State<MovieCastGridView> {
                               Container(
                                 width: size.width * 0.25,
                                 height: size.width * 0.25,
-                                decoration: BoxDecoration(
-                                  color: AppColors.shimmerBaseDark,
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: cast.profileUrl == null
-                                        ? const AssetImage(
-                                            'assets/images/person.png')
-                                        : CachedNetworkImageProvider(
-                                            cast.profileUrl!,
+                                child: cast.profileUrl == null
+                                    ? Image.asset('assets/images/person.png')
+                                    : CachedNetworkImage(
+                                        imageUrl: cast.profileUrl!,
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          decoration: BoxDecoration(
+                                            color: AppColors.shimmerBaseDark,
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              alignment:
+                                                  FractionalOffset.center,
+                                              image: imageProvider,
+                                            ),
                                           ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            const Skeleton.ignore(
+                                          child: Icon(Icons.error),
+                                        ),
+                                      ),
                               ),
                               16.h,
                               Text(

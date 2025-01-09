@@ -6,7 +6,7 @@ class MovieInfoModel {
   final String? posterUrl;
   final double? voteAverage;
   final String releaseDate;
-  final GenreModel? genre;
+  final List<GenreModel>? genres;
 
   MovieInfoModel({
     required this.id,
@@ -14,6 +14,6 @@ class MovieInfoModel {
     required this.posterUrl,
     required this.voteAverage,
     required this.releaseDate,
-    required this.genre,
+    required this.genres,
   });
 }
