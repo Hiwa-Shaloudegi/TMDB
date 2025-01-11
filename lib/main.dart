@@ -6,6 +6,9 @@ import 'package:tmdb/app.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
 import 'package:tmdb/config/theme/cubit/theme_cubit.dart';
 import 'package:tmdb/core/di/di.dart';
+import 'package:tmdb/features/favorites/cubit/favorites_cubit.dart';
+import 'package:tmdb/features/search/models/genre_model.dart';
+import 'package:tmdb/features/search/models/movie_info_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,15 +18,24 @@ void main() async {
     ),
   );
 
+  // Hive setup
   await Hive.initFlutter();
+  Hive.registerAdapter(MovieInfoModelAdapter());
+  Hive.registerAdapter(GenreModelAdapter());
 
-  setup();
+  setupDepends();
 
   runApp(
     MultiBlocProvider(
       providers: [
         BlocProvider(
           create: (context) => ThemeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => FavoritesCubit(
+            favoriteRepo: getIt(),
+            logger: getIt(),
+          ),
         ),
       ],
       child: const App(),

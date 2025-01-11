@@ -32,7 +32,7 @@ class MovieDetailCubit extends Cubit<MovieDetailState> {
         id: movieDetailsResponseDto.id!,
         title: movieDetailsResponseDto.title,
         voteAverage: double.parse(
-          movieDetailsResponseDto.voteAverage!.toStringAsFixed(2),
+          movieDetailsResponseDto.voteAverage!.toStringAsFixed(1),
         ),
         backdropPath: movieDetailsResponseDto.backdropPath,
         posterPath: movieDetailsResponseDto.posterPath,
@@ -74,7 +74,7 @@ class MovieDetailCubit extends Cubit<MovieDetailState> {
               authorName: e.author!,
               content: e.content!,
               rating: e.authorDetails!.rating != null
-                  ? double.parse(e.authorDetails!.rating!.toStringAsFixed(2))
+                  ? double.parse(e.authorDetails!.rating!.toStringAsFixed(1))
                   : null,
               avatarUrl: e.authorDetails!.avatarPath != null
                   ? e.authorDetails?.avatarPath

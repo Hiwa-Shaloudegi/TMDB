@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb/core/di/di.dart';
+import 'package:tmdb/features/favorites/cubit/favorites_cubit.dart';
 import 'package:tmdb/features/favorites/page/favorites_page.dart';
 import 'package:tmdb/features/home/cubit/home_cubit.dart';
 import 'package:tmdb/features/home/page/home_page.dart';
@@ -57,7 +58,13 @@ abstract class AppRoutes {
       ),
       GoRoute(
         path: AppRoutes.favorites,
-        builder: (context, state) => const FavoritesPage(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => FavoritesCubit(
+            favoriteRepo: getIt(),
+            logger: getIt(),
+          ),
+          child: const FavoritesPage(),
+        ),
       ),
       GoRoute(
           path: AppRoutes.movieDetail,
@@ -68,7 +75,9 @@ abstract class AppRoutes {
               create: (context) => MovieDetailCubit(
                 getIt(),
               ),
-              child: MovieDetailPage(movieId: id),
+              child: MovieDetailPage(
+                movieId: id,
+              ),
             );
           }),
     ],

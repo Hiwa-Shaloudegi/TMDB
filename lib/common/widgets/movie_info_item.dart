@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,23 +30,49 @@ class MovieInfoItem extends StatelessWidget {
         children: [
           SizedBox(
             width: size.width * 0.3,
-            child: CachedNetworkImage(
-              imageUrl: movie.posterUrl!,
-              imageBuilder: (context, imageProvider) => Container(
-                decoration: BoxDecoration(
-                  color: AppColors.shimmerBaseDark,
-                  borderRadius: BorderRadius.circular(16),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    alignment: FractionalOffset.center,
-                    image: imageProvider,
+            child: movie.posterUrl!.startsWith('http') ||
+                    movie.posterUrl!.startsWith('https')
+                ? CachedNetworkImage(
+                    imageUrl: movie.posterUrl!,
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.shimmerBaseDark,
+                        borderRadius: BorderRadius.circular(16),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          alignment: FractionalOffset.center,
+                          image: imageProvider,
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Container(
+                      height: size.height * 0.18,
+                      decoration: BoxDecoration(
+                        color: AppColors.shimmerBaseDark,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: const Skeleton.ignore(
+                        child: Icon(Icons.error),
+                      ),
+                    ),
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: Image.file(
+                      File(movie.posterUrl!),
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) => Container(
+                        height: size.height * 0.18,
+                        decoration: BoxDecoration(
+                          color: AppColors.shimmerBaseDark,
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: const Skeleton.ignore(
+                          child: Icon(Icons.error),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              errorWidget: (context, url, error) => const Skeleton.ignore(
-                child: Icon(Icons.error),
-              ),
-            ),
           ),
           16.w,
           Expanded(

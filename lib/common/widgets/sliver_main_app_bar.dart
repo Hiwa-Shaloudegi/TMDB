@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb/config/consts/app_sizes.dart';
 
 class SliverMainAppBar extends StatelessWidget {
   const SliverMainAppBar({
@@ -37,11 +36,7 @@ class SliverMainAppBar extends StatelessWidget {
       ),
       actions: actions ??
           [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: AppSizes.pagePadding),
-              child: trailing ?? const SizedBox(),
-            ),
+            trailing ?? const SizedBox(),
           ],
     );
   }

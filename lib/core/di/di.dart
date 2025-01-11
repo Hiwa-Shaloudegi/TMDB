@@ -3,12 +3,15 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:tmdb/config/consts/endpoints.dart';
 import 'package:tmdb/core/services/http_client/api_interceptor.dart';
+import 'package:tmdb/core/services/image_storage/image_storage.dart';
+import 'package:tmdb/data/data_src/local/favorites/favorites_data_src_local.dart';
 import 'package:tmdb/data/data_src/local/genre/genre_data_src_local.dart';
 import 'package:tmdb/data/data_src/remote/genre/genre_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/movies/movies_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/movies_list/movies_list_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/search/search_data_src_remote.dart';
 import 'package:tmdb/data/data_src/remote/trending/trending_data_src.dart';
+import 'package:tmdb/data/repos/favorites/favorite_repo.dart';
 import 'package:tmdb/data/repos/movies/movies_repo.dart';
 import 'package:tmdb/data/repos/movies_list/movies_list_repo.dart';
 import 'package:tmdb/data/repos/search/search_repo.dart';
@@ -16,7 +19,7 @@ import 'package:tmdb/data/repos/trending/trending_repo.dart';
 
 final getIt = GetIt.instance;
 
-void setup() {
+void setupDepends() {
   initServices();
   initDataSources();
   initRepos();
@@ -58,6 +61,13 @@ void initServices() {
       return dio;
     },
   );
+
+  // Dio
+  getIt.registerLazySingleton<ImageStorage>(
+    () => ImageStorage(
+      getIt(),
+    ),
+  );
 }
 
 void initDataSources() {
@@ -95,8 +105,16 @@ void initDataSources() {
       getIt(),
     ),
   );
+
   getIt.registerSingleton<GenreDataSrcLocal>(
     GenreDataSrcLocal(
+      getIt(),
+    ),
+  );
+
+  getIt.registerSingleton<FavoritesDataSrcLocal>(
+    FavoritesDataSrcLocal(
+      getIt(),
       getIt(),
     ),
   );
@@ -125,6 +143,11 @@ void initRepos() {
     SearchRepo(
       getIt(),
       getIt(),
+      getIt(),
+    ),
+  );
+  getIt.registerSingleton<FavoriteRepo>(
+    FavoriteRepo(
       getIt(),
     ),
   );

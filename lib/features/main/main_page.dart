@@ -18,7 +18,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainSkeletonState extends State<MainPage> {
-  final screens = [
+  final List<Widget> screens = [
     BlocProvider(
       create: (context) => HomeCubit(
         moviesListRepo: getIt(),
