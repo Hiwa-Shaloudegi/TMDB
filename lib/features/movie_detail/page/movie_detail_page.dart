@@ -159,7 +159,7 @@ class _MovieDaState extends State<MovieDetailPage>
                               decoration: BoxDecoration(
                                 color: AppColors.shimmerBaseDark,
                                 borderRadius: const BorderRadius.vertical(
-                                  bottom: Radius.circular(16),
+                                  top: Radius.circular(16),
                                 ),
                               ),
                               child: CachedNetworkImage(
@@ -170,7 +170,9 @@ class _MovieDaState extends State<MovieDetailPage>
                                     Container(
                                   decoration: BoxDecoration(
                                     color: AppColors.shimmerBaseDark,
-                                    borderRadius: BorderRadius.circular(16),
+                                    borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(16),
+                                    ),
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
                                       alignment: FractionalOffset.center,
