@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/dot_loading.dart';
+import 'package:tmdb/common/widgets/error_snackbar.dart';
 import 'package:tmdb/common/widgets/sliver_main_app_bar.dart';
 import 'package:tmdb/config/consts/app_sizes.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
@@ -63,7 +65,16 @@ class _MovieDaState extends State<MovieDetailPage>
     final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
-      body: BlocBuilder<MovieDetailCubit, MovieDetailState>(
+      body: BlocConsumer<MovieDetailCubit, MovieDetailState>(
+        listener: (context, state) {
+          if (state.getMovieDetailsStatus is GetMovieDetailsError) {
+            context.pop();
+            showErrorSnackBar(
+              context,
+              'An error occurred. Please check your connection.',
+            );
+          }
+        },
         builder: (context, state) {
           if (state.getMovieDetailsStatus is GetMovieDetailsLoading) {
             return const Center(
@@ -71,7 +82,7 @@ class _MovieDaState extends State<MovieDetailPage>
             );
           } else if (state.getMovieDetailsStatus is GetMovieDetailsError) {
             return const Center(
-              child: Text('Error'),
+              child: DotLoading(size: 20),
             );
           } else if (state.getMovieDetailsStatus is GetMovieDetailsSuccess) {
             final getMovieDetailsStatus =
