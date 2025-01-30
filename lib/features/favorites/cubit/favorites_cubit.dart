@@ -106,6 +106,11 @@ class FavoritesCubit extends Cubit<FavoritesState> {
     emit(state.copyWith(checkIfFavoritedStatus: CheckIfFavoritedLoading()));
 
     try {
+      /// if toggleFavoritesStatus is Loading wait till becomes Success
+      while (state.toggleFavoritesStatus is ToggleFavoritesLoading) {
+        await Future.delayed(Duration.zero);
+      }
+
       final isFavorited = await _favoriteRepo.isFavorited(movieId);
 
       emit(
