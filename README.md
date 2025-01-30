@@ -21,6 +21,37 @@ You can find the figma design [here](https://www.figma.com/design/yPDLLKcSnAsc11
 - **[Dio](https://pub.dev/packages/dio)**: For HTTP requests.  
 - **[Cached Network Image](https://pub.dev/packages/cached_network_image)**: For efficient image loading and caching.  
 
+
+## Setup Instructions ⚙️  
+
+### 1. Clone the Repository 
+```
+git clone https://github.com/Hiwa-Shaloudegi/TMDB.git
+cd TMDB
+```
+
+### 2. Set Up API Key 
+This project requires an API access token from TMDB. To configure it:
+
+1. Create a .env file in the root directory by copying .env.example:
+```
+cp .env.example .env
+```
+2. Open .env and update it with a valid API access token:
+```
+API_ACCESS_TOKEN=your_api_access_token_here
+```
+
+### 3. Install Dependencies
+```
+flutter pub get
+```
+
+### 4. Run the App
+```
+flutter run
+```
+
 ## Screenshots 📸  
 
 <p align="center">
