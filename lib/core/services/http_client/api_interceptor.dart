@@ -1,11 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiInterceptor extends Interceptor {
+  static final _apiAccessToken = dotenv.env['API_ACCESS_TOKEN'];
+
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    options.headers['Authorization'] =
-        'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMTdhMWJmNzBlZjNkNTRjOWVkMGFhMWQzMDgyMDgyOSIsIm5iZiI6MTczMDAyMDcyNS4xMjksInN1YiI6IjY3MWUwNTc1MjY4NWNiNjU2M2MxMTNlMyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ndIC6EetHYNl_L_lxNigTtqMEANv21L7CARdWyXqZxE';
+    options.headers['Authorization'] = 'Bearer  $_apiAccessToken';
     options.headers['Content-Type'] = 'application/json';
     options.headers['Accept'] = 'application/json';
 

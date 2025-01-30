@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:tmdb/app.dart';
 import 'package:tmdb/config/theme/colors/app_colors.dart';
@@ -17,6 +18,9 @@ void main() async {
       systemNavigationBarColor: AppColors.primary,
     ),
   );
+
+  // Load .env file
+  await dotenv.load(fileName: ".env");
 
   // Hive setup
   await Hive.initFlutter();

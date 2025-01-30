@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/logger.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:tmdb/common/extensions/num_extension.dart';
 import 'package:tmdb/common/widgets/dot_loading.dart';
@@ -44,7 +45,6 @@ class _MovieDaState extends State<MovieDetailPage>
       vsync: this,
     );
 
-    // TODO:
     context
         .read<FavoritesCubit>()
         .checkIfFavorited(movieId: int.parse(widget.movieId));
@@ -116,8 +116,13 @@ class _MovieDaState extends State<MovieDetailPage>
                             .read<FavoritesCubit>()
                             .toggleFavorite(movieInfo);
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppSizes.pagePadding),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(
+                          20,
+                          AppSizes.pagePadding,
+                          AppSizes.pagePadding,
+                          AppSizes.pagePadding,
+                        ),
                         child: BlocBuilder<FavoritesCubit, FavoritesState>(
                           buildWhen: (p, c) =>
                               p.checkIfFavoritedStatus !=

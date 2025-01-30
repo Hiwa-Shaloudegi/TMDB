@@ -26,7 +26,7 @@ class SliverMainAppBar extends StatelessWidget {
       leading: GestureDetector(
         onTap: () => context.pop(),
         child: Container(
-          margin: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: leading ??
               Transform.scale(
                 scale: 0.4,

@@ -72,7 +72,6 @@ class FavoritesDataSrcLocal {
   Future<List<MovieInfoModel>> getAll() async {
     final box = await _initBox();
     final movies = box.values.toList();
-    _logger.i("Fetched ${movies.length} favorite movies");
     return movies;
   }
 

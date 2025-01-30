@@ -114,9 +114,6 @@ class FavoritesCubit extends Cubit<FavoritesState> {
               CheckIfFavoritedSuccess(isFavorited: isFavorited),
         ),
       );
-      emit(state.copyWith(
-          checkIfFavoritedStatus:
-              CheckIfFavoritedSuccess(isFavorited: isFavorited)));
     } catch (e) {
       _logger.e(e.toString());
       emit(
